@@ -8,11 +8,19 @@ import "./assets/css/bootstrap-5.0.0-beta2.min.css";
 import "./assets/css/LineIcons.2.0.css";
 import "./assets/css/main.css";
 import "./assets/css/tiny-slider.css";
-
+import {
+  useQuery,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

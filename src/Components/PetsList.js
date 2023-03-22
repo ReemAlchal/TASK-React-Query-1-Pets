@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import PetItem from "./PetItem";
+import list from "../utils/api/pets";
+import { useQuery } from "@tanstack/react-query";
 
 function PetsList({ petsData }) {
+  const response = useQuery(["petsData"], list);
+  // console.log(response.data?.data);
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
   const [pets, setPets] = useState(petsData);
@@ -9,13 +13,14 @@ function PetsList({ petsData }) {
   const handleAdopt = (petId) =>
     setPets(pets.filter((pet) => pet.id !== petId));
 
-  const petList = pets
+  const petList = response.data?.data
     .filter(
       (pet) =>
         pet.name.toLowerCase().includes(query.toLowerCase()) &&
         pet.type.includes(type)
     )
     .map((pet) => <PetItem key={pet.id} pet={pet} handleAdopt={handleAdopt} />);
+
   return (
     <section id="doctors" class="doctor-section pt-140">
       <div class="container">
